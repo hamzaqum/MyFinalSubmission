@@ -1,0 +1,48 @@
+<h2 class="page-header">Account Login</h2>
+{{#if errors}}
+{{#each errors}}
+<div class="alert alert-danger">{{msg}}</div>
+{{/each}}
+{{/if}}
+
+<div id="google_translate_element" style="display: none;"></div>
+        <select class="selectpicker" data-width="fit" onchange="translateLanguage(this.value);">
+		
+            <option  data-content='<span class="flag-icon flag-icon-us"></span> English' value="English">English</option>
+	    
+            <option  data-content='<span class="flag-icon flag-icon-es"></span> Spanish' value="Spanish">Spanish</option>
+	     </select>
+<form method="POST" action="/users/login">
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" name="username" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" name="password" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-secondary">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+        }
+
+        function translateLanguage(lang) {
+            googleTranslateElementInit();
+            var $frame = $('.goog-te-menu-frame:first');
+            if (!$frame.size()) {
+                alert("Error: Could not find Google translate frame.");
+                return false;
+            }
+            $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
+            return false;
+        }
+
+        $(function(){
+            $('.selectpicker').selectpicker();
+        });
+    </script>
